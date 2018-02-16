@@ -10,13 +10,14 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.util.TimerTask;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Timer;
 
 /**
  *
  * @author Andrew
  */
-public class DrawPane extends JPanel implements MouseListener {
+public class DrawPane extends JPanel implements MouseListener, MouseMotionListener {
 
     JPanel drawpane = this;
     CircleObject c;
@@ -32,12 +33,13 @@ public class DrawPane extends JPanel implements MouseListener {
 
     public DrawPane(CircleObject c) {
         this.c = c;
+        this.addMouseMotionListener(this);
         this.addMouseListener(this);
         this.setFocusable(true);
     }
 
-    Timer timer = new Timer();
-    TimerTask task = new MyTimerTask();
+    //Timer timer = new Timer();
+    //TimerTask task = new MyTimerTask();
     MouseEvent e;
 
     public MouseEvent getE() {
@@ -48,50 +50,41 @@ public class DrawPane extends JPanel implements MouseListener {
         this.e = e;
     }
 
-    private class MyTimerTask extends TimerTask {
+    /*private class MyTimerTask extends TimerTask {
 
         public void run() {
             double ym = (e.getLocationOnScreen().getY() - c.getY());
             double xm = (e.getLocationOnScreen().getX() - c.getX());
 
-            if (c.getX() > e.getLocationOnScreen().getX()) {
-                //System.out.println("It worked!");
-                double newX = c.getX();
-                newX = (c.getX() - xm);
-                c.setX(newX);
-                //y = mx + b
-                //y - b = mx
-                //(y - b)/m = x
-            }
-            if (c.getX() < e.getLocationOnScreen().x) {
-                //System.out.println("It worked!");
-                double newX = c.getX();
-                newX = (c.getX() + xm);
-                c.setX(newX);
-            }
-            if (c.getY() > e.getLocationOnScreen().y) {
-                //System.out.println("It worked!");
-                double newY = c.getY();
-                newY = (c.getY() - ym);
-                c.setY(newY);
-            }
-            if (c.getY() < e.getLocationOnScreen().y) {
-                //System.out.println("It worked!");
-                double newY = c.getY();
-                newY = (c.getY() + ym);
-                c.setY(newY);
-            }
+            
             drawpane.repaint();
         }
-    }
+    }*/
+    
     @Override
     public void mouseClicked(MouseEvent e) {
-        timer = new Timer();
+        /*timer = new Timer();
         task = new MyTimerTask();
         setE(e);
         timer.scheduleAtFixedRate(task, 0, 60);
-        //try{timer.wait(100);} catch(Exception ex) {ex.printStackTrace();}
-        //task.cancel();
+        try{timer.wait(100);} catch(Exception ex) {ex.printStackTrace();}
+        task.cancel();
+        double movenumber = 10.0;
+        double ym = (e.getLocationOnScreen().getY() - (c.getY()-100));
+        double xm = (e.getLocationOnScreen().getX() - (c.getX()+100));
+        double currentX = c.getX();
+        double currentY = c.getY();
+        double newX = currentX + xm;
+        double newY = currentY + ym;
+           for (int i = 0;i<movenumber+1;i++) {
+                c.setX(currentX + xm/movenumber);
+                c.setY(currentY + ym/movenumber);
+                c.setX(e.getLocationOnScreen().getX()-c.getRadius()/2);
+                c.setY(e.getLocationOnScreen().getY()-c.getRadius());
+                System.out.println("YAHOO");
+                drawpane.repaint();
+            }*/
+            
     }
     @Override
     public void mousePressed(MouseEvent e) {
@@ -103,7 +96,7 @@ public class DrawPane extends JPanel implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        task.cancel();
+//        task.cancel();
         // Will not stop execution of task.run() if it is midway
         // But will guarantee that after this call it runs no more than one more time
     }
@@ -157,4 +150,17 @@ public class DrawPane extends JPanel implements MouseListener {
     public void keyReleased(KeyEvent e) {
         
     }*/
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        c.setX(e.getLocationOnScreen().getX()-c.getRadius()/2);
+                c.setY(e.getLocationOnScreen().getY()-c.getRadius());
+                System.out.println("YAHOO");
+                drawpane.repaint();
+    }
 }
