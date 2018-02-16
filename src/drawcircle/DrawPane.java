@@ -157,10 +157,14 @@ public class DrawPane extends JPanel implements MouseListener, MouseMotionListen
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-        c.setX(e.getLocationOnScreen().getX()-c.getRadius()/2);
-                c.setY(e.getLocationOnScreen().getY()-c.getRadius());
+    public void mouseMoved(MouseEvent e){
+        double currentX = e.getLocationOnScreen().getX();
+        double currentY = e.getLocationOnScreen().getY();
+        for (int i = 0;i<11;i++) {
+                c.setX(currentX + (e.getLocationOnScreen().getX()-c.getRadius()/2)/10.0);
+                c.setY(currentY + (e.getLocationOnScreen().getY()-c.getRadius())/10.0);
                 System.out.println("YAHOO");
                 drawpane.repaint();
+            }
     }
 }
